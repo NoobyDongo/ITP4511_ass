@@ -27,6 +27,7 @@ public class HandleAll extends HttpServlet {
     private VenueDB vdb;
     private BookingDB bdb;
     private ArrayList<VenueBean> venues = new ArrayList();
+    private Result view, create, edit, delete;
 
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
@@ -42,6 +43,11 @@ public class HandleAll extends HttpServlet {
         bdb = new BookingDB(dbUrl, dbUser, dbPassword);
 
         venues = vdb.get("", "");
+        
+        edit = new Result("edited", "edit", "a record");
+        create = new Result("created", "create", "a record");
+        view = new Result("retrived", "retrive", "a list of records");
+        delete = new Result("removed", "remove", "a record");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -85,9 +91,12 @@ public class HandleAll extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getParameter("action");
+        
         HttpSession session = request.getSession();
         String userid = (String) session.getAttribute("userid");
         boolean hasLogin = userid != null;
+        
+        
         Args args = new Args(request, response, action, userid);
         setMessage(session, "");
 
@@ -117,14 +126,12 @@ public class HandleAll extends HttpServlet {
             if (hasLogin) {
                 session.invalidate();
                 args.session = request.getSession(true);
-                //request.setAttribute("customers", customers);
             }
             args.forward("front");
         }
         if (args.equals("login")) {
 
             if (hasLogin) {
-                //request.setAttribute("customers", customers);
                 args.forward("front");
             } else {
 
@@ -153,7 +160,7 @@ public class HandleAll extends HttpServlet {
         }
 
         if (!hasLogin) {
-            setMessage(session, "no login");
+            setMessage(session, "Please login.");
             request.setAttribute("redirect", indexPage);
             args.forward("login");
         } else {
@@ -163,6 +170,36 @@ public class HandleAll extends HttpServlet {
         }
     }
 
+    class Result{
+        final static String good = "Successfully %s %s.", bad = "Failed to %s %s.";
+        String gaction = null, baction = null, item = null;
+
+        public Result(){
+            
+        }
+        public Result renew(Result r, String item){
+            this.gaction = r.gaction;
+            this.baction = r.baction;
+            this.item = item;
+            return this;
+        }
+        public Result(String gaction, String baction, String item) {
+            this.gaction = gaction;
+            this.baction = baction;
+            this.item = item;
+        }
+        
+        public String get (boolean b, String item){
+            if(gaction != null)
+                return b? String.format(good, gaction, item) : String.format(bad, baction, item);
+            else return "";
+        }
+        
+        public String get(boolean b){
+            return get (b, item);
+        }
+    }
+    
     class Args {
 
         String userid, msg = "", action = "";
@@ -229,13 +266,10 @@ public class HandleAll extends HttpServlet {
 
     private Args manageGuest(Args args) throws IOException, ServletException {
 
-        String gaction = "", baction = "";
-        String item = "";
+        Result r = new Result();
         if (args.equals("showguest")) {
             args.setStatus(true);
-            gaction = "retrived";
-            baction = "retrive";
-            item = "guest list from database";
+            r = r.renew(view, "guest list from database");
         } else {
 
             String id = args.getParameter("id");
@@ -245,28 +279,23 @@ public class HandleAll extends HttpServlet {
 
             if (args.equals("editguest")) {
                 args.setStatus(gdb.update(bean));
-                gaction = "edited";
-                baction = "edit";
-                item = "a guest";
+            r = r.renew(edit, "a guest");
             }
             if (args.equals("createguest")) {
                 args.setStatus(gdb.add(bean));
-                gaction = "created";
-                baction = "create";
-                item = "a new guest";
+            r = r.renew(create, "a new guest");
             }
             if (args.equals("deleteguest")) {
                 args.setStatus(gdb.delete(bean));
-                gaction = "removed";
-                baction = "remove";
-                item = "a guest from the database";
+            r = r.renew(create, "a guest from the database");
             }
         }
         if (args.tried) {
-            args.msg = args.status ? String.format("Successfully %s %s.", gaction, item) : String.format("Failed to %s %s.", baction, item);
+            args.msg = r.get(args.status);
             args.setAttribute("guests", gdb.getBatch(args.userid));
             args.forward("guest");
         }
         return args;
     }
+    
 }

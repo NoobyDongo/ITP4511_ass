@@ -102,6 +102,10 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
                         <form method="POST" action="request?">
+                            <input type="hidden" name="action" value="register">
+                            <input class="dropdown-item" type="submit" value="Register Account">
+                        </form>
+                        <form method="POST" action="request?">
                             <input type="hidden" name="action" value="showbooking">
                             <input class="dropdown-item" type="submit" value="Manage Booking">
                         </form>

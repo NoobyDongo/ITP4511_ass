@@ -34,7 +34,7 @@ $(document).ready(function () {
     if (currentprompt !== null) {
         openPrompt(currentprompt);
     }
-    $('body').removeAttr("hidden").delay(400).animate({opacity: '1'}, 100);
+    $('body').removeAttr("hidden").delay(400).animate({opacity: '1'}, 250);
 
     var hidden = false;
     $("#message").on("click", function (event) {
