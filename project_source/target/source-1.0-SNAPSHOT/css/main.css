@@ -1,0 +1,302 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Apr 27, 2023, 10:35:27 PM
+    Author     : Ison Ho
+*/
+
+
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 700,
+        'GRAD' 200,
+        'opsz' 48
+}
+.material-symbols-rounded.fill {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 700,
+        'GRAD' 200,
+        'opsz' 48
+}
+
+
+:root {
+    --dropshadow: 0px 0px 15px 5px #1a1a1a6f;
+    --border: 1px solid #d1d1d1;
+    --theme-color: #726ae3;
+    --cancel-color: #898989;
+}
+
+
+
+body,
+html {
+    margin: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.button {
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    width: auto;
+
+}
+
+.button:hover {
+    filter: brightness(90%);
+}
+
+.button[t="sub"] {
+    background-color: var(--cancel-color);
+}
+
+.button[t="main"] {
+    background-color: var(--theme-color);
+}
+
+.button[t="no"] {
+    background-color: darkred;
+}
+
+#message{
+    user-select: none;
+    cursor: pointer;
+    color: gray;
+    padding-inline: var(--main-padding);
+}
+
+body {
+    opacity: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    background-color: #fff;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: overlay;
+    padding: 50px var(--main-padding);
+}
+.main-container input:not(.button){
+    margin-top : 5px;
+    margin-bottom : 15px;
+}
+
+.main-container>div {
+    box-sizing: border-box;
+    width: 100%;
+
+}
+
+:root {
+    --main-padding: 15%;
+}
+
+.navbar {
+    align-items: center;
+    top: 0;
+    width: 100%;
+    padding-inline: var(--main-padding);
+}
+
+.navbar>.navbar-brand {
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    background-color: #726ae3;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 15px 10px 0px;
+}
+.navbar-nav>.nav-item{
+    display: flex;
+    align-items: center;
+}
+.navbar-nav>.nav-item>.nav-link{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+.dropdown-item{
+    cursor: pointer;
+}
+.navbar>.navbar-brand:hover {
+    color: #fff;
+    background-color: rgb(75, 64, 225);
+}
+#navbarDropdownMenuLink{
+    display: flex;
+    align-items:center;
+}
+#navbarDropdownMenuLink > span{
+    font-size: 2rem;
+    color: white;
+    margin-left: 10px;
+    background-color: var(--theme-color);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+#venue>.venue {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+#venue>.venue>.block {
+    flex: 1;
+    min-width: 680px;
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 0px; 
+    grid-template-areas:
+        "left right";
+}
+#venue>.venue>.block>div{
+    overflow: hidden;
+}
+#venue>.venue>.block>.img  { grid-area: left; }
+#venue>.venue>.block>.info { grid-area: right; }
+
+#venue>.venue>.block>.info {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr 0.25fr 1fr;
+    grid-template-rows: 0.75fr 0.5fr 0.75fr 1.5fr, 1fr;
+    gap: 5px 5px; 
+    grid-template-areas:
+        "name name name type type "
+        "capacity staffname staffname staffname fee"
+        "address address address address address"
+        "desc desc desc desc desc"
+        "time time time book book";
+}
+#venue>.venue>.block>.info>div{
+    display: flex;
+    gap: 3px;
+    padding: 8px;
+    align-items: center;
+}
+#venue>.venue>.block>.info>div:not(.button){
+    background-color: #f8f9fa;
+}
+#venue>.venue>.block>.info>div.button{
+    max-height: 60px;
+    margin-top: auto;
+}
+#venue>.venue>.block>.info>div>p {
+    display: inline;
+    text-overflow: ellipsis;
+    margin: 0px;
+}
+.info>.name { grid-area: name; }
+.info>.type { grid-area: type; }
+.info>.desc { grid-area: desc; }
+.info>.address { grid-area: address; }
+.info>.capacity { grid-area: capacity; }
+.info>.staffname { grid-area: staffname; }
+.info>.fee { grid-area: fee; }
+.info>.time { grid-area: time; }
+.info>.book { grid-area: book; }
+
+#venue>.venue>.block>.img {
+    margin: 10px;
+    aspect-ratio: 1 / 1;
+}
+
+#venue>.venue>.block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.prompt-container {
+    opacity: 0;
+    z-index: 999;
+    display: flex;
+    top: 0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.65);
+    height: 100%;
+    width: 100%;
+}
+
+.prompt-container>div {
+    margin: auto;
+    box-sizing: border-box;
+    width: fit-content;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--dropshadow);
+}
+
+:root {
+    --prompt-margin: 20px;
+}
+
+.prompt-container>div>.header {
+    padding: var(--prompt-margin);
+    border-bottom: var(--border);
+    display: flex;
+    align-items: center;
+
+}
+
+.prompt-container>div>.header>span {
+    cursor: pointer;
+    height: auto;
+    text-align: center;
+}
+
+.prompt-container>div>.header>span:hover {
+    transform: scale(1.1);
+}
+
+.prompt-container>div>.header>h3 {
+    flex-grow: 1;
+    margin: 0;
+}
+
+.prompt-container>div>form {
+    padding: var(--prompt-margin);
+    padding-top: 0px;
+}
+
+.prompt-container>div>form>div>p {
+    margin: var(--prompt-margin) 0px 3px 0px;
+}
+
+.prompt-container>div>form>div:not(.options)>input {
+    box-sizing: border-box;
+    border: var(--border);
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+    min-width: 400px;
+}
+
+.prompt-container>div>form>.options {
+    display: flex;
+    gap: 10px;
+    justify-content: right;
+    margin-top: 25px;
+}

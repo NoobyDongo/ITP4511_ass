@@ -1,0 +1,18 @@
+/* AUTOMATICALLY GENERATED ON Thu Mar 30 17:12:39 CST 2023*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.WebUserDataPermission "/";
+  permission javax.security.jacc.WebResourcePermission "/";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "**";
+  permission javax.security.jacc.WebRoleRefPermission "", "**";
+  permission javax.security.jacc.WebRoleRefPermission "HandleCustomer", "**";
+  permission javax.security.jacc.WebRoleRefPermission "ict.servlet.HandleEdit", "**";
+  permission javax.security.jacc.WebRoleRefPermission "com.mycompany.ws7_sosad.JakartaRestConfiguration", "**";
+  permission javax.security.jacc.WebRoleRefPermission "ict.servlet.HandleError", "**";
+  permission javax.security.jacc.WebRoleRefPermission "default", "**";
+};
+
