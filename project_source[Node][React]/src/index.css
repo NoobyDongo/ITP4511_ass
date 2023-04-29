@@ -1,0 +1,174 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.material-symbols-rounded {
+  font-variation-settings:
+      'FILL' 0,
+      'wght' 700,
+      'GRAD' 200,
+      'opsz' 48
+}
+.material-symbols-rounded.fill {
+  font-variation-settings:
+      'FILL' 1,
+      'wght' 700,
+      'GRAD' 200,
+      'opsz' 48
+}
+
+:root {
+  --dropshadow: 0px 0px 15px 5px #1a1a1a6f;
+  --border: 1px solid #d1d1d1;
+  --theme-color: #726ae3;
+  --cancel-color: #898989;
+}
+#root{
+  height: fit-content;
+}
+
+body,
+html {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.vcentered{
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  width: auto;
+
+}
+
+.button:hover {
+  filter: brightness(90%);
+}
+
+.button[t="sub"] {
+  background-color: var(--cancel-color);
+}
+
+.button[t="main"] {
+  background-color: var(--theme-color);
+}
+
+.button[t="no"] {
+  background-color: darkred;
+}
+
+#message{
+  user-select: none;
+  cursor: pointer;
+  color: gray;
+  padding-inline: var(--main-padding);
+}
+.ml-auto{
+  margin-left: auto;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: overlay;
+}
+
+
+
+:root {
+  --main-padding: 15%;
+}
+
+.prompt-container {
+  opacity: 0;
+  z-index: 999;
+  display: flex;
+  top: 0;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.65);
+  height: 100%;
+  width: 100%;
+}
+
+.prompt-container>div {
+  margin: auto;
+  box-sizing: border-box;
+  width: fit-content;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: var(--dropshadow);
+}
+
+:root {
+  --prompt-margin: 20px;
+}
+
+.prompt-container>div>.header {
+  padding: var(--prompt-margin);
+  border-bottom: var(--border);
+  display: flex;
+  align-items: center;
+
+}
+
+.prompt-container>div>.header>span {
+  cursor: pointer;
+  height: auto;
+  text-align: center;
+}
+
+.prompt-container>div>.header>span:hover {
+  transform: scale(1.1);
+}
+
+.prompt-container>div>.header>h3 {
+  flex-grow: 1;
+  margin: 0;
+}
+
+.prompt-container>div>form {
+  padding: var(--prompt-margin);
+  padding-top: 0px;
+}
+
+.prompt-container>div>form>div>p {
+  margin: var(--prompt-margin) 0px 3px 0px;
+}
+
+.prompt-container>div>form>div:not(.options)>input {
+  box-sizing: border-box;
+  border: var(--border);
+  border-radius: 5px;
+  padding: 8px;
+  width: 100%;
+  min-width: 400px;
+}
+
+.prompt-container>div>form>.options {
+  display: flex;
+  gap: 10px;
+  justify-content: right;
+  margin-top: 25px;
+}
