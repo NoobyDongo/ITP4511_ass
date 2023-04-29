@@ -1,0 +1,21 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "description": "This is the front end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js",
+    "start-server": "node server.js --ignore client",
+    "start-client": "set BROWSER=none&& react-scripts start"
+  },
+  "author": "ison ho",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
+  }
+}

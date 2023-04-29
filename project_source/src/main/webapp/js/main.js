@@ -45,6 +45,17 @@ $(document).ready(function () {
     });
 });
 
+function hidePage(id){
+    console.log(id);
+    $("#" + id).hide();
+    $("#" + id).css("position", "absolute");
+}
+
+function showPage(id){
+    console.log(id);
+    $("#" + id).css("position", "relative");
+    $("#" + id).show();
+}
 
 function closePrompt(id) {
     console.log(id);
@@ -52,6 +63,10 @@ function closePrompt(id) {
     $("#" + id).hide();
 }
 
+function toBooking(id){
+    showPage("createbooking");
+    hidePage("venue");
+}
 
 function openPrompt(id) {
     console.log(id);

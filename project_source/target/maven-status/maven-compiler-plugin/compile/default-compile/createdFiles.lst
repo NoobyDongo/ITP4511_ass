@@ -22,4 +22,5 @@ ict\db\AbstractDatabase.class
 ict\db\AbstractDatabase$SqlAction.class
 ict\servlet\HandleAll.class
 ict\db\AbstractDatabase$SqlResultSet.class
+ict\servlet\HandleAll$Result.class
 ict\bean\VenueBean.class
