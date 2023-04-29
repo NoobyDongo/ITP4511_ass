@@ -5,11 +5,9 @@
 package ict.db;
 
 import ict.bean.AbstractBean;
-import ict.bean.BookingBean;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +26,7 @@ interface linkedDatabase<T>{
     public ArrayList<T> readBatch(String id);
 }
 
-public abstract class AbstractDatabase<T extends AbstractBean> {
+public abstract class AbstractDatabase<T extends AbstractBean<T>> {
 
     interface SqlAction {
 
@@ -157,7 +155,7 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
         this.updateSql = updateSql;
     }
 
-    protected Connection getConnection() throws SQLException, IOException {
+    private Connection getConnection() throws SQLException, IOException {
         try {
             //  System.setProperty("jdbc.drivers", "com.mysql.jdbc.Driver");
             Class.forName("com.mysql.jdbc.Driver");
@@ -167,16 +165,8 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
         return DriverManager.getConnection(url, username, password);
     }
 
-    //???
-    public void createDB(String createDB) {
-        tryHarder((SqlAction) () -> {
-            st = new SqlStatement();
-            st.execute("CREATE DATABASE " + createDB);
-        }, st);
-    }
-
-    public void createTable(String... cols) {
-        tryHarder((SqlAction) () -> {
+    public boolean createTable(String... cols) {
+        return tryHarder((SqlAction) () -> {
             st = new SqlStatement();
             String sql = "CREATE TABLE IF NOT EXISTS " + name + "(";
             for (String s : cols) {
@@ -193,7 +183,7 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
         return st.rowCount > 0;
     }
     
-    protected boolean _insertOrDeleteRecord(String sql, String... args){
+    protected boolean _updateDB(String sql, String... args){
         return tryHarder((SqlAction) () -> {
             st = new SqlStatement(sql, args);
             st.executeUpdate();
@@ -234,13 +224,6 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
             sql.executeQuery();
         }, null), sql.rs);
     }
-
-    protected boolean _delRecord(String id) {
-        return tryHarder((SqlAction) () -> {
-            st = new SqlStatement("SELECT * FROM " + name + " WHERE ID=?", id);
-            st.executeUpdate();
-        }, st) && st.rowCount > 0;
-    }
     
     protected abstract T createBean();
     
@@ -249,17 +232,17 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
     public abstract T create(T bean);
     
     
-    public T _update(T bean, String... args) {
+    protected T _update(T bean, String... args) {
         boolean r = tryHarder((AbstractDatabase.SqlAction) () -> {
-            st = new AbstractDatabase.SqlStatement(updateSql, args);
+            st = new SqlStatement(updateSql, args);
             _updateDB();
         }, st) && st.rowCount > 0;
         return r? bean : null;
     }
 
-    public T _create(T bean, String... args) {
+    protected T _create(T bean, String... args) {
         boolean r = tryHarder((AbstractDatabase.SqlAction) () -> {
-            _insertOrDeleteRecord(createSql, args);
+            _updateDB(createSql, args);
         }, st);
         return r? bean : null;
     }
@@ -268,9 +251,9 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
         return bean.getId() == null? null:bean;
     }
     public ArrayList<T> read(String col, String val){
-        ArrayList<T> list = new ArrayList();
+        ArrayList<T> list = new ArrayList<>();
         tryHarder((AbstractDatabase.SqlAction) () -> {
-            AbstractDatabase.SqlResultSet rs = _queryByCol(col, val);
+            SqlResultSet rs = _queryByCol(col, val);
             ResultSet r = rs.data;
             while (r.next()) {
                 T b = createBean();

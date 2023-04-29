@@ -5,7 +5,6 @@
 package ict.services;
 
 import ict.bean.MemberBean;
-import ict.db.AbstractDatabase;
 import ict.db.MemberDB;
 
 /**
@@ -15,7 +14,7 @@ import ict.db.MemberDB;
 public class MemberCRUD extends AbstractCRUDservices<MemberDB, MemberBean> {
 
     @Override
-    protected MemberDB newDB() {
+    protected MemberDB createDB() {
         return new MemberDB(dbUrl, dbPassword, dbUser);
     }
     

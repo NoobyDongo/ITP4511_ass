@@ -111,7 +111,7 @@ public class HandleAll extends HttpServlet {
             String phone = request.getParameter("phone");
             String pwd = request.getParameter("pwd");
 
-            MemberBean m = new MemberBean(null, fname, lname, email, address, phone, pwd);
+            MemberBean m = new MemberBean();
             ArrayList<MemberBean> a = mdb.read("email", email);
             if (a.size() < 1) {
                 mdb.create(m);
@@ -277,15 +277,15 @@ public class HandleAll extends HttpServlet {
             GuestBean bean = new GuestBean(id, args.userid, name, email);
 
             if (args.equals("editguest")) {
-                args.setStatus(gdb.update(bean));
+                //args.setStatus(gdb.update(bean));
             r = r.renew(edit, "a guest");
             }
             if (args.equals("createguest")) {
-                args.setStatus(gdb.create(bean));
+                //args.setStatus(gdb.create(bean));
             r = r.renew(create, "a new guest");
             }
             if (args.equals("deleteguest")) {
-                args.setStatus(gdb.delete(bean));
+                //args.setStatus(gdb.delete(bean));
             r = r.renew(create, "a guest from the database");
             }
         }

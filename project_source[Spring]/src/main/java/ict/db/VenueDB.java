@@ -4,7 +4,6 @@
  */
 package ict.db;
 
-import ict.bean.AbstractBean;
 import ict.bean.VenueBean;
 import java.io.IOException;
 import java.sql.Date;

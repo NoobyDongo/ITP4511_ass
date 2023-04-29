@@ -33,13 +33,13 @@ public class GuestDB extends AbstractDatabase<GuestBean> implements linkedDataba
     @Override
     public boolean delete(String id) {
         return tryHarder((SqlAction) () -> {
-            _insertOrDeleteRecord("delete from guest where id = ?", id);
+            _updateDB("delete from guest where id = ?", id);
         }, st);
     }
 
     @Override
     public ArrayList<GuestBean> readBatch(String id) {
-        ArrayList<GuestBean> list = new ArrayList();
+        ArrayList<GuestBean> list = new ArrayList<>();
         tryHarder((SqlAction) () -> {
             st = new SqlStatement("select id, name, email from guest where memberid = ?", id);
             SqlResultSet rs = _query(st);

@@ -14,7 +14,7 @@ import ict.db.GuestDB;
 public class GuestCRUD extends AbstractCRUDservices<GuestDB, GuestBean> {
 
     @Override
-    protected GuestDB newDB() {
+    protected GuestDB createDB() {
         return new GuestDB(dbUrl, dbPassword, dbUser);
     }
     

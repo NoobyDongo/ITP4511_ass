@@ -65,18 +65,18 @@ class Result {
 
 @RestController
 //@RequestMapping("/students")
-public abstract class AbstractCRUDservices<D extends AbstractDatabase<B>, B extends AbstractBean> {
+public abstract class AbstractCRUDservices<D extends AbstractDatabase<B>, B extends AbstractBean<B>> {
 
-    protected final String dbUser = "root", dbPassword = "", dbUrl = "jdbc:mysql://localhost:3306/ITP4511";
+    protected final static String dbUser = "root", dbPassword = "", dbUrl = "jdbc:mysql://localhost:3306/ITP4511";
     private D db;
     private Result view, create, edit, delete;
 
-    protected abstract D newDB();
+    protected abstract D createDB();
     
     @PostConstruct
     void init() {
 
-        db = newDB();
+        db = createDB();
 
         edit = new Result("edited", "edit", "a record");
         create = new Result("created", "create", "a record");
@@ -142,7 +142,7 @@ public abstract class AbstractCRUDservices<D extends AbstractDatabase<B>, B exte
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
         if (db.delete(id.toString()) == false) {
             return ResponseEntity.notFound().build();
         } else {

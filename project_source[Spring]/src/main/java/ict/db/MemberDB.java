@@ -1,8 +1,6 @@
 package ict.db;
 
 import ict.bean.MemberBean;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class MemberDB extends AbstractDatabase<MemberBean> {
 
