@@ -12,51 +12,44 @@ import java.util.ArrayList;
  *
  * @author Ison Ho
  */
-public class GuestDB extends AbstractDatabase<GuestBean> implements linkedDatabase<GuestBean>{
+public class GuestDB extends AbstractDatabase<GuestBean> implements linkedDatabase<GuestBean> {
 
     public GuestDB(String url, String username, String password) {
-        super(url, username, password, "guest");
-    }
-    
-    @Override
-    public boolean update(GuestBean bean) {
-        return tryHarder((SqlAction) () -> {
-            st = new SqlStatement("UPDATE guest set name = ?, email = ? where id = ? and memberid = ?", bean.toStringArray());
-            _updateDB();
-        },st) && st.rowCount > 0;
+        super(url, username, password, "guest",
+                "insert into guest values(Default, ?, ?, ?)",
+                "UPDATE guest set name = ?, email = ? where id = ? and memberid = ?");
     }
 
     @Override
-    public boolean add(GuestBean bean) {
-        return tryHarder((SqlAction) () -> {
-            _insertOrDeleteRecord("insert into guest values(Default, ?, ?, ?)",bean.memberid, bean.name, bean.email);
-        },st);
-    }
-    
-    public boolean delete(GuestBean bean) {
-        return tryHarder((SqlAction) () -> {
-            _insertOrDeleteRecord("delete from guest where id = ?",bean.id);
-        },st);
+    public GuestBean update(GuestBean bean) {
+        return _update(bean, bean.toStringArray());
     }
 
     @Override
-    public ArrayList<GuestBean> getBatch(String id) {
+    public GuestBean create(GuestBean bean) {
+        return _create(bean, bean.memberid, bean.name, bean.email);
+    }
+
+    @Override
+    public boolean delete(String id) {
+        return tryHarder((SqlAction) () -> {
+            _insertOrDeleteRecord("delete from guest where id = ?", id);
+        }, st);
+    }
+
+    @Override
+    public ArrayList<GuestBean> readBatch(String id) {
         ArrayList<GuestBean> list = new ArrayList();
         tryHarder((SqlAction) () -> {
             st = new SqlStatement("select id, name, email from guest where memberid = ?", id);
             SqlResultSet rs = _query(st);
             ResultSet r = rs.data;
-            while(r.next()){
+            while (r.next()) {
                 GuestBean b = new GuestBean(r.getString(1), id, r.getString(2), r.getString(3));
                 list.add(b);
             }
-        },st);
+        }, st);
         return list;
-    }
-
-    @Override
-    public GuestBean get(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

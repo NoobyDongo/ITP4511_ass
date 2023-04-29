@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public class HandleAll extends HttpServlet {
         vdb = new VenueDB(dbUrl, dbUser, dbPassword);
         bdb = new BookingDB(dbUrl, dbUser, dbPassword);
 
-        venues = vdb.get("", "");
+        venues = vdb.read("", "");
         
         edit = new Result("edited", "edit", "a record");
         create = new Result("created", "create", "a record");
@@ -113,9 +112,9 @@ public class HandleAll extends HttpServlet {
             String pwd = request.getParameter("pwd");
 
             MemberBean m = new MemberBean(null, fname, lname, email, address, phone, pwd);
-            ArrayList<MemberBean> a = mdb.get("email", email);
+            ArrayList<MemberBean> a = mdb.read("email", email);
             if (a.size() < 1) {
-                mdb.add(m);
+                mdb.create(m);
             }
             args.forward("register");
         }
@@ -282,7 +281,7 @@ public class HandleAll extends HttpServlet {
             r = r.renew(edit, "a guest");
             }
             if (args.equals("createguest")) {
-                args.setStatus(gdb.add(bean));
+                args.setStatus(gdb.create(bean));
             r = r.renew(create, "a new guest");
             }
             if (args.equals("deleteguest")) {
@@ -292,7 +291,7 @@ public class HandleAll extends HttpServlet {
         }
         if (args.tried) {
             args.msg = r.get(args.status);
-            args.setAttribute("guests", gdb.getBatch(args.userid));
+            args.setAttribute("guests", gdb.readBatch(args.userid));
             args.forward("guest");
         }
         return args;

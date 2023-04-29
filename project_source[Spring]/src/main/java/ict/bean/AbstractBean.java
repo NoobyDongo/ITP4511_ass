@@ -16,6 +16,10 @@ import java.util.Arrays;
  * @param <T>
  */
 public abstract class AbstractBean<T extends AbstractBean> implements Serializable{
+    public String id = null;
+    public String getId() {
+        return this.id;
+    }
     public abstract T update(ResultSet rs) throws SQLException, IOException ;
     public abstract String[] toStringArray();
     public String[] toStringArray(int start, int end){

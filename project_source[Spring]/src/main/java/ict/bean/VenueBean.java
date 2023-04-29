@@ -82,7 +82,7 @@ public class VenueBean extends AbstractBean<VenueBean> {
     public TimeSpan[] open = new TimeSpan[]{new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan()};
     public ArrayList<DateSpan> close = new ArrayList();
 
-    public String id, staffname, name, address, desc, img, type;
+    public String staffname, name, address, desc, img, type;
     public int capacity;
     public double fee;
     public boolean hidden;
@@ -115,7 +115,6 @@ public class VenueBean extends AbstractBean<VenueBean> {
     @Override
     public VenueBean update(ResultSet rs) throws SQLException, IOException {
 
-        this.id = rs.getString("id");
         this.staffname = rs.getString("staffname");
         this.name = rs.getString("name");
         this.address = rs.getString("address");

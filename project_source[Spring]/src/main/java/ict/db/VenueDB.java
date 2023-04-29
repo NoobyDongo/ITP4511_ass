@@ -19,7 +19,9 @@ import java.util.ArrayList;
 public class VenueDB extends AbstractDatabase<VenueBean> {
 
     public VenueDB(String url, String username, String password) {
-        super(url, username, password, "venue");
+        super(url, username, password, "venue", 
+                "", 
+                "");
     }
 
     protected boolean verify(Date date, int start, int time) {
@@ -32,12 +34,12 @@ public class VenueDB extends AbstractDatabase<VenueBean> {
     }
 
     @Override
-    public boolean update(VenueBean bean) {
+    public VenueBean update(VenueBean bean) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean add(VenueBean bean) {
+    public VenueBean create(VenueBean bean) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -61,7 +63,7 @@ public class VenueDB extends AbstractDatabase<VenueBean> {
     }
 
     @Override
-    public ArrayList<VenueBean> get(String col, String val) {
+    public ArrayList<VenueBean> read(String col, String val) {
         ArrayList<VenueBean> list = new ArrayList();
         tryHarder((AbstractDatabase.SqlAction) () -> {
             AbstractDatabase.SqlResultSet rs = _queryByCol("hidden", 0);
@@ -80,9 +82,8 @@ public class VenueDB extends AbstractDatabase<VenueBean> {
     }
 
     @Override
-    public VenueBean get(String id) {
-        VenueBean b = new VenueBean();
-        _queryByID(id, b);
+    public VenueBean read(String id) {
+        VenueBean b = _queryByID(id);
         tryHarder((SqlAction) () -> {
             SqlStatement o = getOpeningDays(id), c = getClosingDays(id);
             b.setTime(o.rs, c.rs);
@@ -102,6 +103,11 @@ public class VenueDB extends AbstractDatabase<VenueBean> {
         SqlStatement s = new SqlStatement("select start, end from closing_days where venueid = ?", id);
         s.executeQuery();
         return s;
+    }
+
+    @Override
+    public boolean delete(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

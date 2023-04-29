@@ -14,49 +14,15 @@ import java.sql.SQLException;
  */
 public class GuestBean extends AbstractBean<GuestBean>{
 
-    public GuestBean() {
-    }
-
-    
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMemberid() {
-        return memberid;
-    }
-
-    public void setMemberid(String memberid) {
-        this.memberid = memberid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String id, memberid,name, email;
+    public String memberid,name, email;
 
     public GuestBean(String id, String memberid, String name, String email) {
         this.id = id;
         this.memberid = memberid;
         this.name = name;
         this.email = email;
+    }
+    public GuestBean() {
     }
     
     @Override

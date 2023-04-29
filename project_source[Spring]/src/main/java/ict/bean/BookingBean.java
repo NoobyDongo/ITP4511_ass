@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  */
 public class BookingBean extends AbstractBean<BookingBean> {
 
-    public String id, memberid, status;
+    public String memberid, status;
     public Timestamp createtime;
     public String image, guestlistid, notificationid;
     public Timestamp checkintime, checkouttime;
@@ -52,5 +52,4 @@ public class BookingBean extends AbstractBean<BookingBean> {
             starthour + "", totalhour + "",
             fee + ""};
     }
-
 }

@@ -5,6 +5,7 @@
 package ict.db;
 
 import ict.bean.AbstractBean;
+import ict.bean.BookingBean;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +25,7 @@ import java.util.logging.Logger;
  */
 interface linkedDatabase<T>{
     
-    public ArrayList<T> getBatch(String id);
+    public ArrayList<T> readBatch(String id);
 }
 
 public abstract class AbstractDatabase<T extends AbstractBean> {
@@ -145,12 +146,15 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
     private String password;
     protected String name;
     protected SqlStatement st = null;
+    protected String updateSql, createSql;
 
-    protected AbstractDatabase(String url, String username, String password, String name) {
+    protected AbstractDatabase(String url, String username, String password, String name, String createSql, String updateSql) {
         this.url = url;
         this.username = username;
         this.password = password;
         this.name = name;
+        this.createSql = createSql;
+        this.updateSql = updateSql;
     }
 
     protected Connection getConnection() throws SQLException, IOException {
@@ -213,7 +217,8 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
         return rs;
     }
     
-    protected T _queryByID(String id, T bean) {
+    protected T _queryByID(String id) {
+        T bean = createBean();
         tryHarder((SqlAction) () -> {
             SqlResultSet rs = _queryByCol("id", id);
             ResultSet r = rs.data;
@@ -239,11 +244,30 @@ public abstract class AbstractDatabase<T extends AbstractBean> {
     
     protected abstract T createBean();
     
-    public abstract boolean update(T bean);
-    public abstract boolean add(T bean);
-    public abstract T get(String id);
+    public abstract boolean delete(String id);
+    public abstract T update(T bean);
+    public abstract T create(T bean);
     
-    public ArrayList<T> get(String col, String val){
+    
+    public T _update(T bean, String... args) {
+        boolean r = tryHarder((AbstractDatabase.SqlAction) () -> {
+            st = new AbstractDatabase.SqlStatement(updateSql, args);
+            _updateDB();
+        }, st) && st.rowCount > 0;
+        return r? bean : null;
+    }
+
+    public T _create(T bean, String... args) {
+        boolean r = tryHarder((AbstractDatabase.SqlAction) () -> {
+            _insertOrDeleteRecord(createSql, args);
+        }, st);
+        return r? bean : null;
+    }
+    public T read(String id){
+        T bean = _queryByID(id);
+        return bean.getId() == null? null:bean;
+    }
+    public ArrayList<T> read(String col, String val){
         ArrayList<T> list = new ArrayList();
         tryHarder((AbstractDatabase.SqlAction) () -> {
             AbstractDatabase.SqlResultSet rs = _queryByCol(col, val);

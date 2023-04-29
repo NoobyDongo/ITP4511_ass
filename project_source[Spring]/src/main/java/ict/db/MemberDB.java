@@ -7,7 +7,9 @@ import java.util.ArrayList;
 public class MemberDB extends AbstractDatabase<MemberBean> {
 
     public MemberDB(String url, String username, String password) {
-        super(url, username, password, "member");
+        super(url, username, password, "member",
+                "insert into member values(Default, ?, ?, ?, ?, ?, ?)",
+                "UPDATE member set fname = ?, lname = ?, email = ?, address = ?, phone = ?, pwd = ? where id = ?");
     }
     
     public MemberBean verify(String email, String password){
@@ -25,28 +27,22 @@ public class MemberDB extends AbstractDatabase<MemberBean> {
     }
 
     @Override
-    public boolean update(MemberBean bean) {
-        return tryHarder((SqlAction) () -> {
-            st = new SqlStatement("UPDATE member set fname = ?, lname = ?, email = ?, address = ?, phone = ?, pwd = ? where id = ?", bean.toStringArray());
-            _updateDB();
-        }, st) && st.rowCount > 0;
+    public MemberBean update(MemberBean bean) {
+        return _update(bean, bean.toStringArray());
     }
 
     @Override
-    public boolean add(MemberBean bean) {
-        return tryHarder((SqlAction) () -> {
-            _insertOrDeleteRecord("insert into member values(Default, ?, ?, ?, ?, ?, ?)", bean.toStringArray(0, 6));
-        }, st);
-    }
-
-    @Override
-    public MemberBean get(String id) {
-        MemberBean b = new MemberBean();
-        return _queryByID(id, b);
+    public MemberBean create(MemberBean bean) {
+        return _create(bean,bean.toStringArray(0, 6));
     }
 
     @Override
     protected MemberBean createBean() {
         return new MemberBean();
+    }
+
+    @Override
+    public boolean delete(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
