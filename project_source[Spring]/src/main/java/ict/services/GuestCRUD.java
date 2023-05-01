@@ -6,16 +6,20 @@ package ict.services;
 
 import ict.bean.GuestBean;
 import ict.db.GuestDB;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author Ison Ho
  */
-public class GuestCRUD extends AbstractCRUDservices<GuestDB, GuestBean> {
+@RestController
+@RequestMapping("/guest")
+public class GuestCRUD extends AbstractCRUDservice<GuestDB, GuestBean> {
 
     @Override
     protected GuestDB createDB() {
-        return new GuestDB(dbUrl, dbPassword, dbUser);
+        return new GuestDB(dbUrl, dbUser, dbPassword);
     }
     
 }

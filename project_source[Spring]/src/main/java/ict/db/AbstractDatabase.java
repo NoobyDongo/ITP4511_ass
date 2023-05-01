@@ -192,7 +192,7 @@ public abstract class AbstractDatabase<T extends AbstractBean<T>> {
 
     protected SqlResultSet _queryByCol(String col, String value) {
         SqlResultSet rs = new SqlResultSet(tryHarder((SqlAction) () -> {
-            st = new SqlStatement("select * from " + name + " where ? = ?", col, value);
+            st = new SqlStatement("select * from " + name + " where `" + col + "` = ?", value);
             st.executeQuery();
         },st), st.rs);
         return rs;
@@ -214,6 +214,7 @@ public abstract class AbstractDatabase<T extends AbstractBean<T>> {
             ResultSet r = rs.data;
             if(r.next()){
                 bean.update(r);
+                System.out.println("new Bean id:" + bean.getId());
             }
         },st);
         return bean;

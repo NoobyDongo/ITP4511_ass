@@ -15,7 +15,7 @@ import java.util.Arrays;
  * @author Ison Ho
  * @param <T>
  */
-public abstract class AbstractBean<T extends AbstractBean> implements Serializable{
+public abstract class AbstractBean<T extends AbstractBean<T>> implements Serializable{
     public String id = null;
     public String getId() {
         return this.id;

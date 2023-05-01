@@ -6,8 +6,8 @@ public class MemberDB extends AbstractDatabase<MemberBean> {
 
     public MemberDB(String url, String username, String password) {
         super(url, username, password, "member",
-                "insert into member values(Default, ?, ?, ?, ?, ?, ?)",
-                "UPDATE member set fname = ?, lname = ?, email = ?, address = ?, phone = ?, pwd = ? where id = ?");
+                "insert into member values(Default, ?, ?, ?, ?, ?, 0)",
+                "UPDATE member set fname = ?, lname = ?, email = ?, phone = ?, pwd = ? where id = ?");
     }
     
     public MemberBean verify(String email, String password){
@@ -31,7 +31,7 @@ public class MemberDB extends AbstractDatabase<MemberBean> {
 
     @Override
     public MemberBean create(MemberBean bean) {
-        return _create(bean,bean.toStringArray(0, 6));
+        return _create(bean,bean.toStringArray(0, 5));
     }
 
     @Override

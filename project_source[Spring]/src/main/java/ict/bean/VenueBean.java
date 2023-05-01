@@ -4,7 +4,6 @@
  */
 package ict.bean;
 
-import ict.db.AbstractDatabase;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -80,7 +79,7 @@ public class VenueBean extends AbstractBean<VenueBean> {
     }
 
     public TimeSpan[] open = new TimeSpan[]{new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan(), new TimeSpan()};
-    public ArrayList<DateSpan> close = new ArrayList();
+    public ArrayList<DateSpan> close = new ArrayList<>();
 
     public String staffname, name, address, desc, img, type;
     public int capacity;

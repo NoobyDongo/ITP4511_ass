@@ -19,17 +19,17 @@ public class MemberBean extends AbstractBean<MemberBean> {
     public MemberBean() {
     }
 
-    public String fname, lname, email, address, phone, pwd;
+    public String fname, lname, email, address, phone, pwd, role;
     
     @Override
     public MemberBean update(ResultSet rs) throws SQLException, IOException {
-        id = rs.getString(1);
-        fname = rs.getString(2);
-        lname = rs.getString(3);
-        email = rs.getString(4);
-        address = rs.getString(5);
-        phone = rs.getString(6); 
-        pwd = rs.getString(7);
+        id = rs.getString("id");
+        fname = rs.getString("fname");
+        lname = rs.getString("lname");
+        email = rs.getString("email");
+        phone = rs.getString("phone"); 
+        pwd = rs.getString("pwd");
+        role = rs.getString("role");
         return this;
     }
 
