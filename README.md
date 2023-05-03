@@ -18,14 +18,14 @@ This project is built to handle part of the senario mentioned in the [project br
   - [X] Show a list of <s>all venue and</s> guest
   - [X] Add / edit / delete <s>venue and</s> guest
   - [ ] <s>Enable/disable listing of venue on booking system</s>
-  - [ ] Confirm/decline booking request
+  - [X] Confirm/decline booking request
   - [ ] <s>Handle booking check-in / check-out</s>
 
 + Venue Booking
   - [X] Show a list of venue and related features (e.g. Image, name, type, capacity, location, description, person-in-charge, booking fee)
-  - [ ] Send booking request / check booking request status
-  - [ ] Booking reminder
-  - [ ] Check/ Update personal booking record
+  - [X] Send booking request / check booking request status
+  - [X] Booking reminder
+  - [X] Check/ Update personal booking record
   
 ## Structure
 The backend server is written in Java with Spring and Maven, while the frontend will written in JavaScript and hosted with React.
@@ -134,7 +134,7 @@ public boolean func(){
 This helps to shorten the code and centralize the error logging.
                 
 ----
-#### AbstractCRUDservices (Under development)
+#### AbstractCRUDservices
 ```mermaid
 classDiagram
 class AbstractCRUDservices~D:AbstractDatabase, B:AbstractBean~{
