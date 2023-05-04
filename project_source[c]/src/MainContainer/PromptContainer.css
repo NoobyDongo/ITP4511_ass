@@ -1,0 +1,79 @@
+.prompt-container {
+    z-index: 10001;
+    display: flex;
+    top: 0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.65);
+    height: 100%;
+    width: 100%;
+  }
+  
+  .prompt-container>div {
+    margin: auto;
+    box-sizing: border-box;
+    width: fit-content;
+    background-color: var(--c3);
+    border-radius: 8px;
+    box-shadow: var(--dropshadow);
+  }
+  .prompt-container textarea.form-control{
+    background-color: var(--c2);
+  }
+  :root {
+    --prompt-margin: 30px;
+  }
+  
+  .prompt-container>div>.header {
+    padding: var(--prompt-margin);
+    border-bottom: var(--border);
+    display: flex;
+    align-items: center;
+    color: var(--c30);
+  }
+  
+  .prompt-container>div>.header>span {
+    cursor: pointer;
+    height: auto;
+    text-align: center;
+  }
+  
+  .prompt-container>div>.header>span:hover {
+    transform: scale(1.1);
+  }
+  
+  .prompt-container>div>.header>h3 {
+    flex-grow: 1;
+    margin: 0;
+  }
+  
+  .prompt-container .content {
+    display: flex;
+    flex-direction: column;
+    padding: var(--prompt-margin);
+    padding-top: 0px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+  
+  .prompt-container p {
+    margin: var(--prompt-margin) 0px 3px 0px;
+  }
+  
+  .prompt-container div:not(.options)>input {
+    box-sizing: border-box;
+    border: var(--border);
+    border-radius: 5px;
+    padding: 12px;
+    width: 100%;
+    min-width: 400px;
+    background-color: var(--c2);
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .prompt-container .options {
+    display: flex;
+    gap: 10px;
+    justify-content: right;
+    margin-top: 25px;
+  }

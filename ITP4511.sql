@@ -9,6 +9,7 @@ Drop table if exists closing_days;
 drop table if exists notification;
 drop table if exists template;
 drop table if exists guestlist;
+drop table if exists guestlist_guest;
 drop table if exists guest;
 drop table if exists member;
 drop table if exists user;
@@ -32,19 +33,12 @@ create table if not exists guest (
     name varchar(255) not null,
     email varchar(255) not null
 );
-create table if not exists guestlist (
-    id int(10) not null primary key AUTO_INCREMENT,
+create table if not exists guestlist_guest(
+    guestlistid int not null references guestlist(id),
     guestid int not null references guest(id)
 );
-
-create table if not exists template (
-    id int(10) not null primary key AUTO_INCREMENT,
-    file varchar(255) not null
-);
-create table if not exists notification (
-    id int(10) not null primary key AUTO_INCREMENT,
-    templateid int references template(id),
-    remark varchar(500)
+create table if not exists guestlist (
+    id int(10) not null primary key AUTO_INCREMENT
 );
 
 Drop table if exists venue;
@@ -66,6 +60,8 @@ insert into user values(default, 'Tai Man', 'Chan', 'staff@outlook.com', 6928508
 insert into user values(default, 'Ming', 'Siu', 'a@a.a', 69285085, 'a', 0);
 
 insert into guest values(default, 2, 'name', 'haha@123.com');
+insert into guest values(default, 2, 'name2', 'haha@1223.com');
+insert into guest values(default, 2, 'name3', 'haha@12123.com');
 
 insert into venue values(default, 1, 'Happy Farm', 
 'King Ling Road 3, Tiu King Ling, Hong Kong', 
@@ -110,6 +106,13 @@ insert into opening_days values(default, 1, 3, 9, 18);
 insert into opening_days values(default, 1, 4, 9, 13);
 insert into opening_days values(default, 1, 5, 13, 18);
 
+insert into closing_days values(default, 2, '2023-05-15', '2023-05-18');
+insert into opening_days values(default, 2, 1, 9, 18);
+insert into opening_days values(default, 2, 2, 9, 18);
+insert into opening_days values(default, 2, 3, 9, 18);
+insert into opening_days values(default, 2, 4, 9, 13);
+insert into opening_days values(default, 2, 5, 13, 18);
+
 
 create table if not exists booking (
     id int(10) not null primary key AUTO_INCREMENT,
@@ -119,15 +122,17 @@ create table if not exists booking (
     image varchar(255) null,
     
     guestlistid int references guestlist(id),
-    notificationid int references notification(id),
+    remark varchar(500),
 
-    checkintime datetime,
-    checkouttime datetime,
+    checkintime datetime null,
+    checkouttime datetime null,
 
     startdate date not null,
     starthour int(2) not null,
     totalhour int(2) not null,
-    fee double(7,2) not null
+    fee double(7,2) not null,
+
+    template varchar(10) not null
 );
 
 create table if not exists member_comment  (

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ict.project.app.AppApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.447 s - in ict.project.app.AppApplicationTests
