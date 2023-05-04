@@ -28,8 +28,6 @@ This project is built to handle part of the senario mentioned in the [project br
   - [X] Check/ Update personal booking record
   
 ## Structure
-The backend server is written in Java with Spring and Maven, while the frontend will written in JavaScript and hosted with React.
-
 ### Abstraction In Java
 Abstraction provides a faster implementation
                 
