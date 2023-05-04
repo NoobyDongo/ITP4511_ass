@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import Cookies from 'js-cookie';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import "react-datetime/css/react-datetime.css";
 import './index.css';
 
 import Main from './MainContainer/MainContainer';
